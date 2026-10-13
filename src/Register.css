@@ -1,0 +1,100 @@
+
+.register-page {
+  min-height: 75vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 16px;
+}
+
+.register-card {
+  width: 100%;
+  max-width: 430px;
+  padding: 32px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 18px;
+  box-shadow: 0 12px 35px rgba(15, 23, 42, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.register-icon {
+  text-align: center;
+  font-size: 42px;
+}
+
+.register-card h1 {
+  text-align: center;
+  margin: 0;
+  color: #1d4ed8;
+}
+
+.register-card > p {
+  text-align: center;
+  color: #64748b;
+  margin: 0 0 12px;
+}
+
+.register-card label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.register-card input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font: inherit;
+}
+
+.register-card input:focus {
+  outline: 2px solid #93c5fd;
+  border-color: #2563eb;
+}
+
+.register-card > button[type="submit"] {
+  margin-top: 8px;
+  padding: 13px;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.register-card > button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.register-message {
+  padding: 10px;
+  border-radius: 8px;
+  background: #eff6ff;
+  color: #1d4ed8;
+  overflow-wrap: anywhere;
+}
+
+.register-footer {
+  margin-top: 8px;
+  text-align: center;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.register-link {
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: #2563eb;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
