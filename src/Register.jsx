@@ -2,7 +2,7 @@
 import { useState } from "react";
 import "./Register.css";
 
-const API_URL = "http://localhost:8080/api/auth";
+const API_URL = 'https://smart-civic-issue-system-backend.onrender.com/api';
 
 function Register({ onRegistered, onShowLogin }) {
   const [form, setForm] = useState({
@@ -27,32 +27,57 @@ function Register({ onRegistered, onShowLogin }) {
     setLoading(true);
 
     try {
-      const response = await fetch(`${API_URL}/register`, {
+      const response = await fetch(`${API_URL}/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(form),
+        body: JSON.stringify({
+          name: form.name.trim(),
+          email: form.email.trim(),
+          password: form.password,
+        }),
       });
 
-      const data = await response.json();
+      const responseText = await response.text();
+      let data = {};
+
+      if (responseText) {
+        try {
+          data = JSON.parse(responseText);
+        } catch {
+          data = { message: responseText };
+        }
+      }
 
       if (!response.ok) {
-        throw new Error(data.message || "Registration failed.");
+        throw new Error(
+          data.message ||
+            data.error ||
+            `Registration failed (${response.status}).`
+        );
       }
 
       setMessage("Registration successful! You can now log in.");
-      setForm({ name: "", email: "", password: "" });
+      setForm({
+        name: "",
+        email: "",
+        password: "",
+      });
 
       if (onRegistered) {
         onRegistered(data);
       }
     } catch (error) {
-      setMessage(
-        error.message === "Failed to fetch"
-          ? "Cannot connect to the backend. Check that Spring Boot is running."
-          : error.message
-      );
+      console.error("Registration error:", error);
+
+      if (error instanceof TypeError) {
+        setMessage(
+          "Cannot connect to the server. Please check your connection."
+        );
+      } else {
+        setMessage(error.message || "Registration failed.");
+      }
     } finally {
       setLoading(false);
     }
@@ -62,6 +87,7 @@ function Register({ onRegistered, onShowLogin }) {
     <div className="register-page">
       <form className="register-card" onSubmit={handleSubmit}>
         <div className="register-icon">🏙️</div>
+
         <h1>Create Account</h1>
         <p>Join Smart Civic to report and track civic issues.</p>
 
@@ -72,6 +98,7 @@ function Register({ onRegistered, onShowLogin }) {
           value={form.name}
           onChange={handleChange}
           placeholder="Enter your full name"
+          autoComplete="name"
           required
           maxLength={100}
         />
@@ -84,6 +111,7 @@ function Register({ onRegistered, onShowLogin }) {
           value={form.email}
           onChange={handleChange}
           placeholder="Enter your email"
+          autoComplete="email"
           required
           maxLength={100}
         />
@@ -96,6 +124,7 @@ function Register({ onRegistered, onShowLogin }) {
           value={form.password}
           onChange={handleChange}
           placeholder="At least 8 characters"
+          autoComplete="new-password"
           minLength={8}
           required
         />

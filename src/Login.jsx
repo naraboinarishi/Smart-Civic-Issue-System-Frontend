@@ -1,6 +1,10 @@
 import { useState } from "react";
 import "./Login.css";
 
+// Deployed Render backend URL
+const API_URL =
+  "https://smart-civic-issue-system-backend.onrender.com/api";
+
 function Login({ onLogin, onShowRegister, portal = "citizen" }) {
   const isGovernment = portal === "government";
 
@@ -15,19 +19,16 @@ function Login({ onLogin, onShowRegister, portal = "citizen" }) {
     setLoading(true);
 
     try {
-      const response = await fetch(
-        "http://localhost:8080/api/auth/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: identifier.trim(),
-            password,
-          }),
-        }
-      );
+      const response = await fetch(`${API_URL}/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: identifier.trim(),
+          password,
+        }),
+      });
 
       const responseText = await response.text();
       let data = {};
@@ -58,10 +59,12 @@ function Login({ onLogin, onShowRegister, portal = "citizen" }) {
 
       if (error instanceof TypeError) {
         setMessage(
-          "Cannot connect to the backend. Check that Spring Boot is running."
+          "Cannot connect to the server. Please try again in a moment."
         );
       } else {
-        setMessage(error.message || "Login failed. Please try again.");
+        setMessage(
+          error.message || "Login failed. Please try again."
+        );
       }
     } finally {
       setLoading(false);

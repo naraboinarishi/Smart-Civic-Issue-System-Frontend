@@ -14,7 +14,7 @@ import './App.css';
 import Register from './Register';
 import Login from './Login';
 
-const API_URL = 'http://localhost:8080/api';
+const API_URL = 'https://smart-civic-issue-system-backend.onrender.com/api';
 const DEFAULT_CENTER = [17.385, 78.4867];
 
 L.Icon.Default.mergeOptions({
