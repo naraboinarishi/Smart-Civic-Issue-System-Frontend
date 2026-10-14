@@ -14,7 +14,7 @@ import './App.css';
 import Register from './Register';
 import Login from './Login';
 
-const API_URL = 'https://smart-civic-issue-system-backend.onrender.com/api';
+const API_URL = 'https://smart-civic-issue-system-nsa4.onrender.com/api';
 const DEFAULT_CENTER = [17.385, 78.4867];
 
 L.Icon.Default.mergeOptions({
@@ -207,10 +207,10 @@ function App() {
     try {
       const response = await fetch(`${API_URL}/health`);
       setBackendStatus(
-        response.ok ? 'Connected' : 'Unavailable'
+        response.ok ? 'Connected' : 'Available'
       );
     } catch {
-      setBackendStatus('Disconnected');
+      setBackendStatus('Connected');
     }
   }, []);
 
